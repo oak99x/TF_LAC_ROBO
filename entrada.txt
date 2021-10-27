@@ -1,0 +1,17 @@
+robo = ({q0,q1,q2,q3,q4,q5,q6,q7},{A,T,S,L,Z,B,N,M},q0,{q7})
+Prog
+(q0,B) = q1
+(q0,N) = q2
+(q0,Z) = q3
+(q0,L) = q4
+(q0,M) = q5
+(q0,M) = q6
+(q1,S) = q0
+(q2,T) = q0
+(q3,S) = q0
+(q3,A) = q0
+(q4,A) = q0
+(q5,A) = q0
+(q5,S) = q0
+(q5,T) = q0
+(q6,M) = q7
