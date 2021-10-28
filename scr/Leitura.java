@@ -62,7 +62,7 @@ public class Leitura {
         // leitura dos arquivos
 
         List<String> linhas = new ArrayList<>();
-        Path path1 = Paths.get("entrada.txt");
+        Path path1 = Paths.get("xentrada.txt");
 
         try (BufferedReader reader = Files.newBufferedReader(path1, Charset.defaultCharset())) {
             String line = null;
@@ -144,7 +144,7 @@ public class Leitura {
 
         // leitura dos arquivos
         // String aux[];
-        Path path1 = Paths.get("palavras.txt");
+        Path path1 = Paths.get("xpalavras.txt");
 
         try (BufferedReader reader = Files.newBufferedReader(path1, Charset.defaultCharset())) {
             String line = null;

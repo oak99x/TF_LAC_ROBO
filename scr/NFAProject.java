@@ -42,7 +42,7 @@ public class NFAProject {
 			// transition from each current state to each of its next states
 			for (String estado : currStates) {
 				if (transicoes.get(estado) == null){
-					return "Rejeitada";
+					break;
 				}
 				
 				if (transicoes.get(estado).containsKey(s))
