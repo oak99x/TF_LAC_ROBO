@@ -1,99 +1,75 @@
 import java.util.*;
 
 public class T2_NFAProject {
-	String start;
-	Set<String> ends;
-	Map<String, Map<Character,List<String>>> transitions; // state -> (character -> [next states])
-	
-	T2_NFAProject(String[] ss, String[] ts) {
-		ends = new TreeSet<String>();
-		transitions = new TreeMap<String, Map<Character,List<String>>>();
+	List<String> estados;
+	List<String> alfabeto;
+	List<String> palavras;
+	String isInicial;
+	List<String> isFinal;
+	Map<String, Map<Character, List<String>>> transicoes;
 
-		// States
-		for (String v : ss) {
-			String[] pieces = v.split(",");
-			if (pieces.length>1) {
-				if (pieces[1].equals("S")) start = pieces[0];
-				else if (pieces[1].equals("E")) ends.add(pieces[0]);
-			}
-		}
+	Leitura le;
 
-		// Transitions
-		for (String e : ts) {
-			String[] pieces = e.split(",");
-			String from = pieces[0], to = pieces[1];
-			if (!transitions.containsKey(from)) transitions.put(from, new TreeMap<Character,List<String>>());
-			for (int i=2; i<pieces.length; i++) {
-				char c = pieces[i].charAt(0);
-				// difference from DFA: list of next states
-				if (!transitions.get(from).containsKey(c)) transitions.get(from).put(c, new ArrayList<String>());
-				transitions.get(from).get(c).add(to);				
-			}
-		}
+	T2_NFAProject() {
+		le = new Leitura();
+		le.LeituraEntrada();
+        le.LeituraPalavras();
 
-		System.out.println("start:"+start);
-		System.out.println("end:"+ends);
-		System.out.println("transitions:"+transitions);
+		this.estados = le.getEstados();
+		this.alfabeto = le.getAlfabeto();
+		this.isInicial = le.getIsInicial();
+		this.isFinal = le.getIsFinal();
+		this.transicoes = le.getTransicoes();
+
+		this.palavras = le.getPalavras();
+
 	}
 
 	/**
-	 * Returns whether or not the DFA accepts the string --
-	 * follows transitions according to its characters, landing in an end state at the end of the string
+	 * Returns whether or not the DFA accepts the string -- follows transitions
+	 * according to its characters, landing in an end state at the end of the string
 	 */
-	public boolean match(String s) {
+	public String conveteNFA_DFA(String palavra) {
 		// difference from DFA: multiple current states
 		Set<String> currStates = new TreeSet<String>();
-		currStates.add(start);
-		for (int i=0; i<s.length(); i++) {
-			char c = s.charAt(i);
-			Set<String> nextStates = new TreeSet<String>();
+		currStates.add(isInicial);
+
+		for (int i = 0; i < palavra.length(); i++) {
+			char s = palavra.charAt(i);
+
+			Set<String> novoEstado = new TreeSet<String>();
+
 			// transition from each current state to each of its next states
-			for (String state : currStates)
-				if (transitions.get(state).containsKey(c))
-					nextStates.addAll(transitions.get(state).get(c));
-			if (nextStates.isEmpty()) return false; // no way forward for this input
-			currStates = nextStates;
+			for (String estado : currStates) {
+				if (transicoes.get(estado) == null){
+					return "Rejeitada";
+				}
+				
+				if (transicoes.get(estado).containsKey(s))
+					novoEstado.addAll(transicoes.get(estado).get(s));
+			}
+
+			if (novoEstado.isEmpty()) {
+				return "Rejeitada"; // no way forward for this input
+			}
+
+			currStates = novoEstado;
 		}
 		// end up in multiple states -- accept if any is an end state
-		for (String state : currStates) {
-			if (ends.contains(state)) return true;
+		for (String estado : currStates) {
+			// for(String f : isFinal)
+			if (isFinal.contains(estado)) {
+				return "Aceita";
+			}
 		}
-		return false;
+		return "Rejeitada";
 	}
 
-	/**
-	 * Helper method to test matching against a bunch of strings, printing the results
-	 */
-	public void test(String name, String[] inputs) {
-		System.out.println("***" + name);
-		for (String s : inputs)
-			System.out.println(s + ":" + match(s));
-	}
+	public void test() {
+		System.out.println("*** LISTA DE PALAVRAS ***");
 
-	public static void main(String[] args) {
-		String[] ss1 = { "A,S", "B,E", "C" };
-		String[] ts1 = { "A,B,0", "A,C,1", "B,B,0,1", "C,C,0,1" };
-		T2_NFAProject dfa1 = new T2_NFAProject(ss1, ts1);
-		
-		String[] testsT1 = { "0", "00", "00000", "0010101" };
-		dfa1.test("testsT1", testsT1);
-		String[] testsF1 = { "", "1", "1100110" };
-		dfa1.test("testsF1", testsF1);
-		
-		String[] ss1b = { "A,S", "B,E" };
-		String[] ts1b = { "A,B,0", "B,B,0,1" };
-		T2_NFAProject nfa1 = new T2_NFAProject(ss1b, ts1b);
-
-		nfa1.test("testsT1b", testsT1);
-		nfa1.test("testsF1b", testsF1);
-		
-		String[] ss2 = { "A,S", "B", "C", "D,E", "E,E" };
-		String[] ts2 = { "A,A,0,1", "A,B,1", "B,D,1", "D,D,0,1", "A,C,0", "C,E,0", "E,E,0,1" };
-		T2_NFAProject nfa2 = new T2_NFAProject(ss2, ts2);
-		
-		String[] testsT2 = { "00", "001", "0001100", "010110101", "101010100" };
-		nfa2.test("testsT2", testsT2);
-		String[] testsF2 = { "0", "010", "0101010", "1", "101010101010101010101" };
-		nfa2.test("testsF2", testsF2);
+		for (String p : palavras) {
+			System.out.println(p + " -> " + conveteNFA_DFA(p));
+		}
 	}
 }

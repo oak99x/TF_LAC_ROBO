@@ -2,8 +2,8 @@ public class Main {
 
     public static void main(String[] args) {
         
-        Leitura le = new Leitura();
-        le.LeituraEntrada();
-           
+        T2_NFAProject nfa = new T2_NFAProject();
+        nfa.test();
+
         }
     }
