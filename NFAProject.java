@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class T2_NFAProject {
+public class NFAProject {
 	List<String> estados;
 	List<String> alfabeto;
 	List<String> palavras;
@@ -10,7 +10,7 @@ public class T2_NFAProject {
 
 	Leitura le;
 
-	T2_NFAProject() {
+	NFAProject() {
 		le = new Leitura();
 		le.LeituraEntrada();
         le.LeituraPalavras();
