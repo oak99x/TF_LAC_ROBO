@@ -99,7 +99,10 @@ public class NFAtoDFA {
 					List<String> vai_para = nfaTransicoes.get(n).get(simbolo);
 
 					for(String v : vai_para){
-						estados.add(v);
+						if(!estados.contains(v)){
+							estados.add(v);
+						}
+						
 					}	
 				}
 
