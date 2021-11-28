@@ -49,16 +49,20 @@ public class Leitura {
                     for (String s : aux3) {
                         nfa.addAlfabeto(s);
                     }
-                    // estado inicil
+                    // estado inicial
                     nfa.addIsInicial(aux4[1]);
                     // estados finais
                     for (String s : aux5) {
                         nfa.addIsFinal(s);
                     }
                 }
+
+                // definindo as relações (< qi >,< si >) = < qj >
+                // descreve a função programa aplicada a um estado qi e um 
+                // símbolo de entrada si que leva a computação a um estado qj.
                 if (i >= 2) {
 
-                    aux = linha.split("[()]"); // "[\\W]"
+                    aux = linha.split("[()]");
                     String aux2[] = aux[1].split(",");
                     String estado_saida = aux2[0];
                     String simbolo = aux2[1];
@@ -66,18 +70,11 @@ public class Leitura {
                     String aux3[] = aux[2].split(" ");
                     String estado_entrada = aux3[2];
 
+                    //apos todos os dados separados da-se inicio a  montagem do NFA
                     nfa.add_NFA_transicoes(estado_saida, simbolo, estado_entrada, aux.length);
                 }
 
             }
-
-            /*
-             * System.out.println("estados  " + estados); System.out.println("alfabeto  " +
-             * alfabeto); System.out.println("estado inicial  " + isInicial);
-             * System.out.println("estados finais  " + isFinal);
-             * System.out.println("----------------------------------------------");
-             * System.out.println("Transicoes " + transicoes);
-             */
 
         } catch (
 
@@ -99,6 +96,8 @@ public class Leitura {
                 nfa.addPalavras(line);
             }
 
+            //apos a leitura de todas a palavras  no arquivo, da-se inicio
+            //ao teste de validação.
             nfa.test();
 
         } catch (IOException e) {
