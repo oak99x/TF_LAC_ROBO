@@ -113,7 +113,7 @@ public class NFAtoDFA {
 				String simbolo = alfabeto.get(i);
 
 				// a lista de estados abaixo se refere aos proximos estados que
-				// o estado atual(novoEstado) se relaciona
+				// o estadoatual se relaciona
 				List<String> estados = new ArrayList<>();
 
 				// para todo n (estado) na lista de novoEstado, busca-se seus proximos estados
@@ -128,7 +128,7 @@ public class NFAtoDFA {
 
 					// um estado junto de um simbolo pode ir para mais de um estado
 					// então vai_para recebe todos esses proximos estados, servindo 
-					// como auxliar a tarefa de adiciona-los na lista de estados
+					// como auxliar na tarefa de adiciona-los na lista de estados
 					List<String> vai_para = nfaTransicoes.get(n).get(simbolo);
 
 					for(String v : vai_para){
@@ -146,7 +146,7 @@ public class NFAtoDFA {
 
 				/*
 				Os estados encontram-se cada um em uma posição do array
-				aqui, vamos unificas seus nomes em uma só string a fim de formar um "novo nome"
+				aqui, vamos unificar seus nomes em uma só string a fim de formar um "novo nome"
 				idendificando aquele grupo de estados
 				*/
 				//novo nome estado aual
@@ -184,7 +184,7 @@ public class NFAtoDFA {
 
 		}
 
-		// verifica-se quais estados do DFA estão contidos os estados finais do NFA
+		// verifica-se quais estados do DFA contém os estados finais do NFA
 		// os estados encontados formam os estados finais do DFA
 		for(String s : estadosDFA){
 			for(String f : isFinalNFA){
