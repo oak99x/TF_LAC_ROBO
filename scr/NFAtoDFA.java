@@ -25,7 +25,7 @@ public class NFAtoDFA {
 	List<String> alfabeto;
 	List<String> palavras;
 
-	// a partir da Leitura inicialmente cria-se um NFA
+	// a partir da Leitura do arquivo "entrada.txt" inicialmente cria-se um NFA
 	NFAtoDFA() {
 		nfaTransicoes = new TreeMap<String, Map<String, List<String>>>(); 
 		estadosNFA = new ArrayList<>();
@@ -75,7 +75,7 @@ public class NFAtoDFA {
 
 //=================================================================================================
 
-	public void convet_NFAtoDFA(){
+	public void convert_NFAtoDFA(){
 
 		//Constrói o DFA a partir das matrizes, conforme especificado no cabeçalho geral
 		dfaTransicoes = new TreeMap<String, Map<String,String>>();
@@ -239,7 +239,11 @@ public class NFAtoDFA {
 	public void test() {
 
 		// primeiro, converte-se o NFA para DFA
-		convet_NFAtoDFA();
+		convert_NFAtoDFA();
+
+		System.out.println("NFA: " + nfaTransicoes+"\n");
+		System.out.println("DFA: " + dfaTransicoes+"\n");
+		System.out.println("----------------------------------------------");
 
 		// apos conversão, testa-se cada palavra da lista de palavras
 		// e imprimindo na tela sua resposta.
